@@ -1,10 +1,10 @@
 # Netlify Deployment Setup
 
-This repository is configured for automatic deployment to Netlify via GitHub Actions.
+This repository is configured for automatic deployment to Netlify. The `netlify.toml` file contains all necessary configuration.
 
-## Initial Setup (One-Time Configuration)
+## Quick Setup (5 Minutes)
 
-### Option 1: Connect via Netlify Dashboard (Recommended)
+### Step 1: Connect to Netlify
 
 1. **Log in to Netlify**
    - Go to https://app.netlify.com
@@ -13,94 +13,95 @@ This repository is configured for automatic deployment to Netlify via GitHub Act
 2. **Import Your Repository**
    - Click "Add new site" → "Import an existing project"
    - Choose "GitHub" as your Git provider
-   - Authorize Netlify to access your GitHub account
-   - Select the `djbelieny-site` repository
+   - Authorize Netlify to access your GitHub account if prompted
+   - Select the `djbelieny/djbelieny-site` repository
 
 3. **Configure Build Settings**
-   - Build command: Leave empty (static site)
-   - Publish directory: `.` (root directory)
+   - Netlify will automatically detect the `netlify.toml` configuration
+   - Build command: (leave empty)
+   - Publish directory: `.`
    - Click "Deploy site"
 
-4. **Get Your Site Details**
-   - After deployment, note your site URL (e.g., `https://your-site-name.netlify.app`)
-   - You can customize this URL in Site settings → Domain management
+4. **Done!**
+   - Your site will be deployed in 1-2 minutes
+   - You'll get a URL like `https://random-name-123.netlify.app`
 
-### Option 2: Use GitHub Actions (Advanced)
+### Step 2: Customize Your Domain (Optional)
 
-If you want to use the GitHub Actions workflow included in this repository:
+1. In Netlify dashboard, go to **Site settings** → **Domain management**
+2. Click **"Add custom domain"** or **"Change site name"**
+3. For a custom domain like `djbelieny.com`:
+   - Enter your domain name
+   - Follow DNS configuration instructions
+   - Update your domain registrar's DNS settings
 
-1. **Get Netlify Credentials**
-   - Log in to Netlify: https://app.netlify.com
-   - Go to User settings → Applications → Personal access tokens
-   - Create a new access token and copy it
+## How Automatic Deployment Works
 
-2. **Create a New Site on Netlify**
-   - Click "Add new site" → "Import an existing project"
-   - Follow the steps to create the site
-   - Copy the Site ID from Site settings → General → Site details
+Once connected to Netlify:
 
-3. **Add GitHub Secrets**
-   - Go to your GitHub repository: https://github.com/djbelieny/djbelieny-site
-   - Navigate to Settings → Secrets and variables → Actions
-   - Click "New repository secret" and add:
-     - `NETLIFY_AUTH_TOKEN`: Your Netlify personal access token
-     - `NETLIFY_SITE_ID`: Your Netlify site ID
+1. **You push code to GitHub** → Netlify detects the change
+2. **Netlify automatically builds and deploys** → Takes 1-2 minutes
+3. **Your site is live** → Changes appear on your URL
 
-4. **Automatic Deployment**
-   - Every push to the `main` branch will trigger automatic deployment
-   - Check the "Actions" tab in GitHub to see deployment status
+**No additional configuration needed!** Netlify's GitHub integration handles everything automatically.
 
-## Continuous Deployment
+## What's Included
 
-Once configured, the deployment process is automatic:
+The repository includes:
 
-- **Push to GitHub** → **Netlify automatically deploys**
-- Deployment typically takes 1-2 minutes
-- You'll receive deployment notifications in GitHub
+- **netlify.toml** - Deployment configuration with:
+  - Static file serving setup
+  - Security headers
+  - Cache optimization for images and assets
+  - SPA routing support
 
-## Custom Domain (Optional)
+## Monitoring Your Deployments
 
-To use your own domain (e.g., djbelieny.com):
+- **Netlify Dashboard**: View all deployments, logs, and site analytics
+- **Email Notifications**: Get notified when deployments succeed or fail
+- **Deploy Previews**: Each pull request gets its own preview URL
 
-1. Go to Netlify Site settings → Domain management
-2. Click "Add custom domain"
-3. Enter your domain name
-4. Follow the DNS configuration instructions
-5. Update your domain's DNS records with your domain registrar
+## Custom Domain Setup
 
-## Environment Variables
+To use your own domain (e.g., `djbelieny.com`):
 
-If you need to add environment variables:
+1. In Netlify, go to **Site settings** → **Domain management**
+2. Click **"Add custom domain"**
+3. Enter `djbelieny.com`
+4. Netlify will provide DNS records to add
+5. Add these records in your domain registrar (GoDaddy, Namecheap, etc.):
+   - **A Record**: Point to Netlify's load balancer IP
+   - **CNAME Record**: Point `www` to your Netlify site
 
-1. Go to Site settings → Environment variables
-2. Add your variables
-3. Redeploy the site
-
-## Monitoring
-
-- **Netlify Dashboard**: View deployment history, logs, and analytics
-- **GitHub Actions**: Check deployment status in the Actions tab
-- **Deploy Previews**: Pull requests automatically generate preview deployments
+Netlify automatically provisions SSL certificates for custom domains.
 
 ## Troubleshooting
 
-### Deployment Fails
-- Check the deployment logs in Netlify dashboard
-- Verify all files are committed and pushed to GitHub
-- Ensure `netlify.toml` configuration is correct
+**Site not updating after push?**
+- Check Netlify dashboard for deployment status
+- Verify changes were pushed to the `main` branch
+- Clear browser cache (Ctrl+Shift+R or Cmd+Shift+R)
 
-### GitHub Actions Not Running
-- Verify secrets are correctly set in GitHub repository settings
-- Check the Actions tab for error messages
-- Ensure the workflow file is in `.github/workflows/` directory
+**Deployment failed?**
+- Check deployment logs in Netlify dashboard
+- Verify all files are present in the repository
+- Ensure images are in the `images/` directory
 
-### Site Not Updating
-- Clear your browser cache
-- Check Netlify dashboard to confirm deployment completed
-- Verify you pushed changes to the `main` branch
+**Can't find the site?**
+- Look for the site URL in Netlify dashboard under "Site overview"
+- Check that you're logged into the correct Netlify account
 
-## Support
+## Support Resources
 
-- Netlify Documentation: https://docs.netlify.com
-- GitHub Actions Documentation: https://docs.github.com/en/actions
-- Repository: https://github.com/djbelieny/djbelieny-site
+- **Netlify Documentation**: https://docs.netlify.com
+- **GitHub Repository**: https://github.com/djbelieny/djbelieny-site
+- **Netlify Support**: https://www.netlify.com/support/
+
+## Next Steps
+
+After deployment:
+1. ✅ Test the site on your Netlify URL
+2. ✅ Set up a custom domain (optional)
+3. ✅ Configure form submissions if needed
+4. ✅ Add analytics (Netlify Analytics available)
+5. ✅ Set up branch deploys for staging (optional)
